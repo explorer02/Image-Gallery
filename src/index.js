@@ -1,3 +1,9 @@
+import { Controller } from "./mvc/controller.js";
+
+new Controller();
+//==========================V2======================================
+
+/*
 import { trimContent } from "./utils.js";
 
 const maxDescriptionLength = 90;
@@ -130,6 +136,10 @@ const maxTitleLength = 15;
 
   controller.init();
 })();
+
+*/
+
+//==========================V1======================================
 
 /*
 

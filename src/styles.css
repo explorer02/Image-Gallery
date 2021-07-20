@@ -67,7 +67,7 @@ body {
   align-items: center;
 }
 .container-image-preview > img {
-  width: 80%;
+  width: 60%;
   max-height: 70%;
   border: 1px solid black;
   border-radius: 10px;
@@ -95,7 +95,7 @@ body {
 }
 
 .edit-form > textarea {
-  width: 80%;
+  width: 90%;
   max-lines: 8;
   color: blue;
 }
