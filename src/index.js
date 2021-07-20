@@ -1,14 +1,137 @@
-/** Completed
- * selected bug fix
- * listen to keyboard: tab or arrow keys => arrow keys
- * caption edit on right side below image
- */
-/** TODO
- * truncate caption afer 2 lines ...
- * drag and drop
- * mobile responsive
- * lazy loading
- */
+import { trimContent } from "./utils.js";
+
+const maxDescriptionLength = 90;
+const maxTitleLength = 15;
+
+(function () {
+  const model = {
+    data: [
+      {
+        title: "Cat",
+        description:
+          "I am a monster cat (Weaown Waeown). Don't come near me. I will not bite you but will roast your insecurities.",
+        imageURL: "images/cat.jpeg",
+      },
+      {
+        title: "Dog",
+        description:
+          "I am a cool puppy (aow aow). You can play with me or take me to a walk",
+        imageURL: "images/dog.jpeg",
+      },
+      {
+        title: "Horse",
+        description:
+          "I am a horse (HeHeHe). I will blow your mind and ride you to oblivion",
+        imageURL: "images/horse.webp",
+      },
+    ],
+    getData() {
+      return this.data;
+    },
+    currentItemIndex: null,
+  };
+
+  const controller = {
+    init() {
+      model.currentItemIndex = 0;
+      listView.init();
+      canvasView.init();
+    },
+    getData() {
+      return model.getData();
+    },
+    getCurrentItem() {
+      return model.data[model.currentItemIndex];
+    },
+    setCurrentItem(i) {
+      model.currentItemIndex = i;
+      listView.render();
+      canvasView.render();
+    },
+    getCurrentIndex() {
+      return model.currentItemIndex;
+    },
+    updateCurrentItem({ title, description }) {
+      model.data[model.currentItemIndex].title = title;
+      model.data[model.currentItemIndex].description = description;
+      listView.render();
+    },
+    navigate(val = 1) {
+      model.currentItemIndex =
+        (model.currentItemIndex + val + model.data.length) % model.data.length;
+      listView.render();
+      canvasView.render();
+    },
+  };
+
+  const listView = {
+    init() {
+      this.containerList = document.querySelector(".container-list");
+
+      window.addEventListener("keydown", (ev) => {
+        if (ev.key === "ArrowDown") {
+          controller.navigate(1);
+        } else if (ev.key === "ArrowUp") {
+          controller.navigate(-1);
+        }
+      });
+
+      this.render();
+    },
+    render() {
+      const data = controller.getData();
+      const currentIndex = controller.getCurrentIndex();
+      this.containerList.innerHTML = "";
+      data.forEach((d, i) => {
+        const div = document.createElement("div");
+        div.classList.add("container-list-item");
+        if (i === currentIndex) div.classList.add("selected");
+        div.innerHTML = `
+        <img src="${d.imageURL}"/>
+        <div class="list-item-description">
+        <p>${trimContent(d.title, maxTitleLength)}</p>
+        <p>${trimContent(d.description, maxDescriptionLength)}</p>
+        </div>
+        `;
+        div.addEventListener("click", () => {
+          controller.setCurrentItem(i);
+        });
+        this.containerList.append(div);
+      });
+    },
+  };
+
+  const canvasView = {
+    init() {
+      this.containerImagePreview = document.querySelector(
+        ".container-image-preview"
+      );
+      this.mainImage = this.containerImagePreview.querySelector("img");
+      this.inputForm = document.querySelector(".edit-form");
+      this.inputTitle = this.inputForm.querySelector("input");
+      this.inputDescription = this.inputForm.querySelector("textarea");
+      this.saveForm = this.inputForm.querySelector("button");
+
+      this.inputForm.addEventListener("submit", (ev) => ev.preventDefault());
+      this.saveForm.addEventListener("click", (ev) => {
+        const title = this.inputTitle.value;
+        const description = this.inputDescription.value;
+        controller.updateCurrentItem({ title, description });
+      });
+      this.render();
+    },
+    render() {
+      const currentItem = controller.getCurrentItem();
+      this.mainImage.setAttribute("src", currentItem.imageURL);
+      this.inputTitle.setAttribute("value", currentItem.title);
+      this.inputDescription.innerText = currentItem.description;
+    },
+  };
+
+  controller.init();
+})();
+
+/*
 
 import { dataList } from "./server.js";
 import { trimContent } from "./utils.js";
@@ -107,3 +230,5 @@ containerImagePreview
       maxDescriptionLength
     );
   });
+
+  */
