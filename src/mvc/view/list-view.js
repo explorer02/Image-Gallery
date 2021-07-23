@@ -1,6 +1,3 @@
-import { trimContent } from "../../utils.js";
-import { MAX_DESCRIPTION_LENGTH, MAX_TITLE_LENGTH } from "./constants.js";
-
 export class ListView {
   constructor(controller) {
     this.controller = controller;
@@ -22,13 +19,19 @@ export class ListView {
       const div = document.createElement("div");
       div.classList.add("container-list-item");
       if (i === currentIndex) div.classList.add("selected");
-      div.innerHTML = `
-        <img src="${d.imageURL}"/>
-        <div class="list-item-description">
-        <p>${trimContent(d.title, MAX_TITLE_LENGTH)}</p>
-        <p>${trimContent(d.description, MAX_DESCRIPTION_LENGTH)}</p>
-        </div>
-        `;
+      const img = document.createElement("img");
+      img.src = d.imageURL;
+      const p1 = document.createElement("p");
+      p1.innerText = d.title;
+
+      const p2 = document.createElement("p");
+      p2.innerText = d.description;
+
+      const idiv = document.createElement("div");
+      idiv.classList.add("list-item-content");
+      idiv.append(p1, p2);
+      div.append(img, idiv);
+
       div.addEventListener("click", () => {
         this.controller.setCurrentItem(i);
       });

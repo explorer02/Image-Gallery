@@ -16,9 +16,6 @@ export class Controller {
   getCurrentItem() {
     return this.model.data[this.model.currentItemIndex];
   }
-  getCurrentItem() {
-    return this.model.data[this.model.currentItemIndex];
-  }
   setCurrentItem(i) {
     this.model.currentItemIndex = i;
     this.listView.render();

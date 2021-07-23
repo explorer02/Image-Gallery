@@ -17,7 +17,7 @@ export class Model {
       {
         title: "Horse",
         description:
-          "I am a horse (HeHeHe). I will blow your mind and ride you to oblivion",
+          "I am a horse (HeHeHe). I will blow your mind and ride you to oblivion. You will never forget me",
         imageURL: "images/horse.webp",
       },
     ];

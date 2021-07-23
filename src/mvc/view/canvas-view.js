@@ -21,9 +21,8 @@ export class CanvasView {
   }
   render() {
     const currentItem = this.controller.getCurrentItem();
-    console.log(currentItem);
     this.mainImage.setAttribute("src", currentItem.imageURL);
-    this.inputTitle.setAttribute("value", currentItem.title);
+    this.inputTitle.value = currentItem.title;
     this.inputDescription.value = currentItem.description;
   }
 }
