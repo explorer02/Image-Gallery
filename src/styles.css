@@ -1,3 +1,5 @@
+/*Mobile first media queries*/
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,14 +8,27 @@
 html,
 body {
   width: 100%;
-  height: 100%;
-  overflow: scroll;
+  min-height: 100%;
+  min-width: 600px;
 }
 body {
   font-family: sans-serif;
   background: linear-gradient(rgba(255, 0, 0, 0.2), rgba(0, 0, 255, 0.2));
   background-repeat: no-repeat;
 }
+
+@media screen and (max-width: 960px) {
+  .container-main {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    justify-content: space-evenly;
+    gap: 20px;
+  }
+}
+
 .container-main {
   width: 100%;
   height: 100%;
@@ -45,7 +60,7 @@ body {
 .list-item-content {
   flex: 1 1 auto;
 }
-.list-item-content > p:first-child {
+.list-item-content > p {
   font-weight: 600;
   margin-bottom: 0.3rem;
 }
@@ -60,14 +75,18 @@ body {
   background: rgba(0, 0, 255, 0.1);
 }
 
+.container-list-item.hovered {
+  box-shadow: 0px 10px 5px rgba(0, 0, 0, 0.3);
+}
 .container-image-preview {
-  flex: 0 1 50%;
+  flex: 0 1 60%;
   display: flex;
+  min-width: 300px;
   flex-direction: column;
   align-items: center;
 }
 .container-image-preview > img {
-  width: 60%;
+  width: 55%;
   max-height: 70%;
   border: 1px solid black;
   border-radius: 10px;
@@ -103,6 +122,7 @@ body {
   width: 25%;
   color: white;
   background: #00aa00;
+  min-width: min-content;
 }
 .edit-form > button:hover {
   transform: scale(1.1);
